@@ -7,34 +7,40 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
   minZoom: 2,
   dragging: false,
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+  '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+  'Imagery © <a href="http://mapbox.com">Mapbox</a>',
   id: 'mapbox.streets'
 }).addTo(mymap);
 
 
-  var popup = L.popup();
+var popup = L.popup();
 
 
-  function onMapClick(e) {
+function onMapClick(e) {
 
-    $.ajax({url: "/score/" + e.latlng.toString().replace(/LatLng/i, ""), success: function(result){
+  $.ajax({
+    url: "/score/" + e.latlng.toString().replace(/LatLng/i, ""), success: function (result) {
       L.marker([result['best_lat'], result['best_lon']]).addTo(mymap)
-    .bindPopup("Best Location is: " + result["best_lat"] + ", " + result["best_lon"]
-                 +"<div>Windspeed at best location is: " + result["best_speed"]+"</div>")
-    .openPopup();
-     popup
-      .setLatLng(e.latlng)
-      .setContent("You placed your windfarm at " + e.latlng.toString().replace(/LatLng/i, "")
-                 +"\nWindspeed at this location is: " + result["user_speed"])
-      .openOn(mymap);     
+        .bindPopup("Best Location is: " + result["best_lat"] + ", " + result["best_lon"]
+        + "<div>Windspeed at best location is: " + result["best_speed"] + "</div>")
+        .openPopup();
+      L.marker(e.latlng).addTo(mymap)
+        .bindPopup("You placed your windfarm at " + e.latlng.toString().replace(/LatLng/i, "")
+        + "\nWindspeed at this location is: " + result["user_speed"])
+        .openPopup();
+      //  popup
+      //   .setLatLng(e.latlng)
+      //   .setContent("You placed your windfarm at " + e.latlng.toString().replace(/LatLng/i, "")
+      //              +"\nWindspeed at this location is: " + result["user_speed"])
+      //   .openOn(mymap);     
       console.log(result);
-    //  popup
-    //   .setLatLng([result['best_lat'], result['best_lon']])
-    //   .setContent("Best Location is: " + result["best_lat"] + ", " + result["best_lon"]
-    //              +"\nWindspeed at best location is: " + result["best_speed"])
-    //   .openOn(mymap);
-    }})
-  }
+      //  popup
+      //   .setLatLng([result['best_lat'], result['best_lon']])
+      //   .setContent("Best Location is: " + result["best_lat"] + ", " + result["best_lon"]
+      //              +"\nWindspeed at best location is: " + result["best_speed"])
+      //   .openOn(mymap);
+    }
+  })
+}
 
 mymap.on('click', onMapClick);

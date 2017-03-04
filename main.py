@@ -28,19 +28,23 @@ def decay_scorer(lat, lon, speed, l=.9):
     score_matrix = w_diff / (dist_matrix**l)
     best_lat_idx, best_lon_idx = (np.argmax(score_matrix.max(axis=1).T), np.argmax(score_matrix.max(axis=0)))
     best_lat = lats[best_lat_idx]
-    best_lon = lons[best_lon_idx]
+    best_lon = lons[best_lon_idx] - 360
     best_score = np.max(mag)
     print(best_lat, best_lon, best_score)
     return (best_lat, best_lon, best_score)
 
+@app.route('/rack')
 @app.route('/')
 def mainroute():
-    return send_file('index.html')
+    return send_file('rack.html')
 
 
 @app.route('/game')
 def game():
-    return send_file('mapIndex.html')
+    return send_file('game.html')
+@app.route('/howto')
+def howto():
+    return send_file('howto.html')
 
 @app.route('/score/<coords>')
 def score(coords):
