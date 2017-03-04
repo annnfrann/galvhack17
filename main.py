@@ -19,10 +19,13 @@ def mainroute():
 
 @app.route('/game')
 def game():
-    return send_file('game.html')
+    return send_file('mapIndex.html')
 
-@app.route('/score/<lat>/<lon>')
-def score(lat, lon):
+@app.route('/score/<coords>')
+def score(coords):
+    coords.replace('(','').replace(')','').split(', ')
+    lat = float(coords[0])
+    lon = float(coords[1])
     url = 'https://api.planetos.com/v1/datasets/rss_ccmp_winds_v2/point'
     api_key = os.environ['PLANET_OS_API_KEY']
     lat = float(lat)
