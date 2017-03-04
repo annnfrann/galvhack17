@@ -1,3 +1,18 @@
-body {
-  background-color: lightslategray;
+nav {
+  background-color:#2844a0;
+  height: 80px;
+}
+body{
+  background-image: url("background.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  height: 100vh;
+  color:#2844a0;
+  font-size: 20px;
+}
+.name{
+  width:20%;
+}
+.picture{
+  height: 20%;
 }
