@@ -4,7 +4,7 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 
   maxZoom: 4,
   center: L.latLng(-100.89, 40.22),
-  minZoom: 4,
+  minZoom: 2,
   dragging: false,
   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -19,6 +19,10 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
   function onMapClick(e) {
 
     $.ajax({url: "/score/" + e.latlng.toString().replace(/LatLng/i, ""), success: function(result){
+      L.marker([result['best_lat'], result['best_lon']]).addTo(mymap)
+    .bindPopup("Best Location is: " + result["best_lat"] + ", " + result["best_lon"]
+                 +"<div>Windspeed at best location is: " + result["best_speed"]+"</div>")
+    .openPopup();
      popup
       .setLatLng(e.latlng)
       .setContent("You placed your windfarm at " + e.latlng.toString().replace(/LatLng/i, "")
@@ -34,11 +38,3 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
   }
 
 mymap.on('click', onMapClick);
-
-
-// $("mymap").click(function(){
-//   alert("yay")
-//     $.ajax({url: "demo_test.txt", success: function(result){
-//         $("#div1").html(result);
-//     }});
-// });

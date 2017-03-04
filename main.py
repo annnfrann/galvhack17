@@ -20,17 +20,18 @@ def decay_scorer(lat, lon, speed, l=.9):
     lats = rootgrp.variables['latitude']
     lons = rootgrp.variables['longitude']
     #dist_matrix = np.sqrt((rootgrp.variables['latitude']-lat)**2 + (rootgrp.variables['longitude']-lon)**2)
-    dist_matrix = np.zeros((len(lats), len(lons)))
+    dist_matrix = np.ones((len(lats), len(lons)))
     
-    for i in np.arange(len(lats)):
-        for j in np.arange(len(lons)):
-            dist_matrix[i,j] = np.sqrt((lats[i]-lat)**2 + (lons[j]-lon)**2)
+    # for i in np.arange(len(lats)):
+    #     for j in np.arange(len(lons)):
+    #         dist_matrix[i,j] = np.sqrt((lats[i]-lat)**2 + (lons[j]-lon)**2)
     score_matrix = w_diff / (dist_matrix**l)
     best_lat_idx, best_lon_idx = (np.argmax(score_matrix.max(axis=1).T), np.argmax(score_matrix.max(axis=0)))
     best_lat = lats[best_lat_idx]
     best_lon = lons[best_lon_idx]
     best_score = np.max(mag)
-    return best_lat, best_lon, best_score
+    print(best_lat, best_lon, best_score)
+    return (best_lat, best_lon, best_score)
 
 @app.route('/')
 def mainroute():
@@ -62,9 +63,9 @@ def score(coords):
         score['user_speed'] = 0.0
     
     best_lat, best_lon, best_speed = decay_scorer(lat, lon, score['user_speed'])
-    score['best_lat'] = best_lat
-    score['best_lon'] = best_lon
-    score['best_speed'] = best_speed
+    score['best_lat'] = str(best_lat)
+    score['best_lon'] = str(best_lon)
+    score['best_speed'] = str(best_speed)
     #print(best_lat, best_lon, best_score)
     return jsonify(score)
     
