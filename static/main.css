@@ -1,3 +1,9 @@
 body {
   background-color: lightslategray;
 }
+
+#mapid {
+  margin-left: 10%auto;
+  margin-right: 10%auto;
+  height: 580px;
+}
