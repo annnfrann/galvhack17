@@ -1,13 +1,14 @@
 from flask import Flask, send_file, request, jsonify
 import os
 import requests
+import re
 import numpy as np
 from netCDF4 import Dataset
 
 app = Flask(__name__)
 mag = None
 def init():
-    fp = '/home/cully/Downloads/CCMP_Wind_Analysis_20160530_V02.0_L3.0_RSS.nc'
+    fp = '/Users/brentn/github/galvhack17/data.remss.com/ccmp/v02.0/Y2016/M01/CCMP_Wind_Analysis_20160131_V02.0_L3.0_RSS.nc'
     rootgrp = Dataset(fp, 'r', format='NETCDF4')
     mag = np.sqrt(rootgrp.variables['uwnd'][0,:,:]**2 + rootgrp.variables['vwnd'][0,:,:]**2)
     
@@ -19,13 +20,11 @@ def mainroute():
 
 @app.route('/game')
 def game():
-    return send_file('mapIndex.html')
+    return send_file('map.html')
 
 @app.route('/score/<coords>')
 def score(coords):
-    coords.replace('(','').replace(')','').split(', ')
-    lat = float(coords[0])
-    lon = float(coords[1])
+    lat, lon = [ float(x) for x in  re.sub('[()]', '', coords).split(',')]
     url = 'https://api.planetos.com/v1/datasets/rss_ccmp_winds_v2/point'
     api_key = os.environ['PLANET_OS_API_KEY']
     lat = float(lat)
