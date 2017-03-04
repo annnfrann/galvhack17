@@ -1,4 +1,4 @@
-from flask import Flask, send_file, request
+from flask import Flask, send_file, request, jsonify
 import os
 import requests
 import numpy as np
@@ -21,8 +21,8 @@ def mainroute():
 def game():
     return send_file('game.html')
 
-@app.route('/score/<lat>/<lon>'):
-def score():
+@app.route('/score/<lat>/<lon>')
+def score(lat, lon):
     url = 'https://api.planetos.com/v1/datasets/rss_ccmp_winds_v2/point'
     api_key = os.environ['PLANET_OS_API_KEY']
     lat = float(lat)
@@ -39,9 +39,10 @@ def score():
         score['user_speed'] = np.sqrt(u**2 + v**2)
     else: 
         score['user_speed'] = 0.0
-    return score
     
-    return score
+    
+    return jsonify(score)
+    
     
 
 if __name__ == "__main__":
