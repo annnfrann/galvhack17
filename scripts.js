@@ -17,6 +17,17 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
       .setLatLng(e.latlng)
       .setContent("You placed your windfarm at " + e.latlng.toString().replace(/LatLng/i, ""))
       .openOn(mymap);
+    $.ajax({url: "/score/<lat>/<lon>", success: function(result){
+      alert(result)
+    }})
   }
 
 mymap.on('click', onMapClick);
+
+
+// $("mymap").click(function(){
+//   alert("yay")
+//     $.ajax({url: "demo_test.txt", success: function(result){
+//         $("#div1").html(result);
+//     }});
+// });
