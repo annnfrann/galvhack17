@@ -10,7 +10,7 @@ mag = None
 
 rootgrp = None
 
-fp = '/home/cully/Downloads/CCMP_Wind_Analysis_20160530_V02.0_L3.0_RSS.nc'
+fp = '/Users/brentn/github/galvhack17/data.remss.com/ccmp/v02.0/Y2016/M01/CCMP_Wind_Analysis_20160130_V02.0_L3.0_RSS.nc'
 rootgrp = Dataset(fp, 'r', format='NETCDF4')
 mag = np.sqrt(rootgrp.variables['uwnd'][0,:,:]**2 + rootgrp.variables['vwnd'][0,:,:]**2)
 
@@ -45,7 +45,7 @@ def game():
 def score(coords):
     lat, lon = [ float(x) for x in  re.sub('[()]', '', coords).split(',')]
     url = 'https://api.planetos.com/v1/datasets/rss_ccmp_winds_v2/point'
-    api_key = os.environ['PLANET_OS_API_KEY']
+    api_key = '522d9c3837084486a88444b8bd0d62e0'
     lat = float(lat)
     lon = float(lon)
     payload = {'apikey':api_key,
