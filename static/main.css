@@ -1,5 +1,5 @@
 nav {
-  background-color:#2844a0;
+  background-color:#C2DB02;
   height: 80px;
 }
 body{
@@ -7,17 +7,40 @@ body{
   background-size: 100% 100%;
   background-repeat: no-repeat;
   height: 100vh;
-  color:#2844a0;
+  color:#626f00;
   font-size: 20px;
 }
 .name{
   width:20%;
 }
 .picture{
-  height: 20%;
+  margin-top: 3.5%;
+  height: 65px;
 }
 #mapid {
-  margin-left: 10%auto;
-  margin-right: 10%auto;
-  height: 580px;
+  margin-top: 1%;
+  margin-left: 1%;
+  margin-right: 1%;
+  height: 87%;
+}
+.developers{
+  margin-top: 3%;
+}
+.facts{
+  margin-top: 5%;
+}
+.instructions{
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 4%;
+  text-align: justify;
+}
+.objective{
+  font-size: 2em;
+}
+.funFact{
+  width: 20%;
+  margin-left: 45%;
+  text-align: justify;
 }
